@@ -1,0 +1,31 @@
+HIVE:
+history (for impala only)
+hive --version /to get version from CLI
+
+CONNECTING BEELINE TO HIVE:
+beeline> !connect jdbc:hive2://localhost:10000 scott tiger
+
+set hive.execution.engine=spark;
+set hive.execution.engine=mr;
+
+!ls
+!cal
+!pwd
+
+create table hires2(name char(25), last_name char(25));
+alter table hires2 add columns (dob date)
+insert into hires2 values('Rodrigo','Zuniga','Santiago', '2016-10-31');
+desc sample_07
+
+LEAD/LAG
+select code, lead(code) over (order by code),lead(code,2) over (order by code) from sample_07
+select code, lag(code) over (order by code),lag(code,2) over (order by code) from sample_07
+
+DATES
+select dob, year(dob), month(dob), day(dob) from hires2;
+select current_date, current_timestamp;
+select current_date,datediff(current_date,'2017-01-01');
+
+ ADD DAYS/MONTHS TO DATE
+select current_date,last_day(current_date),date_add(current_date,-(day(current_date)-1)),date_add(current_date,10);
+select current_date,add_months(current_date,2),add_months('2016-01-31',1);
